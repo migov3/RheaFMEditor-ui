@@ -103,5 +103,7 @@
       }
     }
   },
-  "defaultProject": "RheaFMEditor-ui"
+  "cli": {
+    "analytics": false
+  }
 }
