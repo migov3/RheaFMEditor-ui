@@ -1,0 +1,27 @@
+
+<div class="header">
+        <div>
+            <button mat-button (click)="toggle()" class="nav-text">
+                    <mat-icon *ngIf="!this.sidenav.opened">view_list</mat-icon>
+                    <mat-icon *ngIf="this.sidenav.opened">navigate_before</mat-icon><span class="disappear">Rhea Web</span>
+            </button>
+        </div>
+        <!-- ========== Header =================== -->
+        <app-header></app-header>
+</div>
+
+
+<mat-sidenav-container>
+    <mat-sidenav #sidenav mode="side">
+        <div>
+            <button mat-button routerLink="/"><mat-icon>info</mat-icon>Guide</button>
+            <mat-divider></mat-divider>
+            <button mat-button routerLink="fm-editor"><mat-icon>edit</mat-icon>FM Editor</button>
+            <mat-divider></mat-divider>
+            <button mat-button routerLink="/"><mat-icon>people</mat-icon>About us</button>
+        </div>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
+</mat-sidenav-container>

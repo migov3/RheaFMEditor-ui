@@ -1,0 +1,41 @@
+.image-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  min-height: 100px;
+}
+
+.image-container {
+  flex-basis: 20%;
+  padding: 10px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+}
+
+img {
+  max-width: 75%;
+  height: auto;
+  max-height: 100px;
+  min-height: 75px;
+  /* Adjusts the maximum height */
+}
+
+@media (max-width: 1200px) {
+
+  .image-container {
+    flex-basis: 20%;
+    padding: 10px;
+  }
+
+  .image-row {
+    justify-content: right;
+  }
+}
+
+@media (max-width: 450px) {
+  .image-container {
+    display: none;
+  }
+}

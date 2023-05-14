@@ -1,0 +1,39 @@
+<ul style="list-style-type: none;">
+  <h4>Upload feature model...</h4>
+  <li>
+    <div>
+      <button mat-button style="text-align: left;" (click)="onFileInputClick()">
+        <img src="../assets/img/folder.png" alt="Icono de archivo" style="margin-right: 5px;">
+        Attach file
+      </button>
+      <input id="fileInput" style="visibility: hidden;" type="file" (change)="onFileSelected($event)" />
+    </div>
+  </li>
+  <li>
+    <div>
+      Or Select One:
+      <mat-form-field appearance="fill">
+        <mat-label>Favorite food</mat-label>
+        <mat-select class="mat-select-trigger">
+          <mat-option [value]="1">Patata</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </li>
+  <li>
+    <b><span>{{ selectedFileName }}</span></b>
+  </li>
+  <li>
+    <button mat-button style="min-height: 35px; margin-left: 2px;" data-bs-toggle="modal" href="#loading">
+      <img src="../assets/img/upload.png">
+      Upload file
+    </button>
+  </li>
+</ul>
+
+<mat-form-field appearance="fill">
+  <mat-label>Favorite food</mat-label>
+  <mat-select class="mat-select-trigger">
+    <mat-option [value]="1">Patata</mat-option>
+  </mat-select>
+</mat-form-field>
