@@ -6,12 +6,18 @@
     position: absolute;
     margin-right: 10px;
     left: 3vh;
-    font-family: 'Montserrat', sans-serif;
     flex-basis: 20%;
     padding-right: 50px;
-    color: white;
     font-size: 30px;
     top: 30px;
+}
+
+span {
+    color: white;
+}
+
+button{
+    color: white;
 }
 
 mat-icon {

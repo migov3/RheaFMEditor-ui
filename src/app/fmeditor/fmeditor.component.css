@@ -1,8 +1,15 @@
-mat-card {
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.child-card {
+    flex: 1 0 calc(15% - 16px);
+    /* Adjust the width calculation based on the number of components */
+}
+
+.card {
+    flex: 1 1 auto;
     margin: 10px;
-    padding: 10px;
-    box-shadow: black 10px;
-    max-width: 1000px;
-    width: 100%;
-    min-height: 200px;
 }

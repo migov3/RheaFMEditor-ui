@@ -1,9 +1,9 @@
 
 <div class="header">
         <div>
-            <button mat-button (click)="toggle()" class="nav-text">
-                    <mat-icon *ngIf="!this.sidenav.opened">view_list</mat-icon>
-                    <mat-icon *ngIf="this.sidenav.opened">navigate_before</mat-icon><span class="disappear">Rhea Web</span>
+            <button mat-button color="primary" (click)="toggle()" class="nav-text">
+                    <mat-icon [ngStyle]="{'color':'white'}" *ngIf="!this.sidenav.opened">menu</mat-icon>
+                    <mat-icon [ngStyle]="{'color':'white'}" *ngIf="this.sidenav.opened">navigate_before</mat-icon><span class="disappear">Rhea Web</span>
             </button>
         </div>
         <!-- ========== Header =================== -->

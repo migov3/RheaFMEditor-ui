@@ -1,21 +1,23 @@
 <ul style="list-style-type: none;">
-  <h4>Upload feature model...</h4>
+  <h3>Upload feature model...</h3>
   <li>
-    <div>
-      <button mat-button style="text-align: left;" (click)="onFileInputClick()">
-        <img src="../assets/img/folder.png" alt="Icono de archivo" style="margin-right: 5px;">
-        Attach file
+    <div class="file-upload">
+      <button mat-raised-button color="" (click)="onFileInputClick()">
+        <div class="file-upload-content">
+          <img src="../assets/img/folder.png" alt="Icono de archivo" class="file-icon">
+          <span class="file-label">Attach file</span>
+        </div>
       </button>
-      <input id="fileInput" style="visibility: hidden;" type="file" (change)="onFileSelected($event)" />
+      <input id="fileInput" style="visibility: hidden;" type="file" accept=".uvl, .json, .xml, .sxfm" (change)="onFileSelected($event)" />
     </div>
   </li>
   <li>
-    <div>
-      Or Select One:
-      <mat-form-field appearance="fill">
-        <mat-label>Favorite food</mat-label>
-        <mat-select class="mat-select-trigger">
-          <mat-option [value]="1">Patata</mat-option>
+    <div style="margin-left: 15px;">
+      ...or select one:
+      <mat-form-field style="margin: 10px;" appearance="outline" class="custom-select-field">
+        <mat-label>Example FMs</mat-label>
+        <mat-select (selectionChange)="onExampleSelected($event)">
+          <mat-option *ngFor="let fmExample of fmExamples" [value]="fmExample">{{fmExample}}</mat-option>
         </mat-select>
       </mat-form-field>
     </div>
@@ -24,16 +26,12 @@
     <b><span>{{ selectedFileName }}</span></b>
   </li>
   <li>
-    <button mat-button style="min-height: 35px; margin-left: 2px;" data-bs-toggle="modal" href="#loading">
-      <img src="../assets/img/upload.png">
-      Upload file
+    <button mat-stroked-button color="primary" style="min-height: 35px; margin-left: 2px;" data-bs-toggle="modal"
+      href="#loading" [disabled]="!file" (click)="loadFeatures()">
+      <div class="upload-content">
+        <img src="../assets/img/upload.png" alt="Upload Icon" class="upload-icon">
+        <span class="upload-label">Upload file</span>
+      </div>
     </button>
   </li>
 </ul>
-
-<mat-form-field appearance="fill">
-  <mat-label>Favorite food</mat-label>
-  <mat-select class="mat-select-trigger">
-    <mat-option [value]="1">Patata</mat-option>
-  </mat-select>
-</mat-form-field>

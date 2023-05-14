@@ -18,6 +18,8 @@ import { ConstraintsComponent } from './constraints/constraints.component';
 import { InteropMatrixComponent } from './interop-matrix/interop-matrix.component';
 import { ConstraintTreeComponent } from './constraint-tree/constraint-tree.component';
 import { SemanticsMetricsComponent } from './semantics-metrics/semantics-metrics.component';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -42,9 +44,10 @@ import { SemanticsMetricsComponent } from './semantics-metrics/semantics-metrics
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModules,
-    FormsModule
+    FormsModule,
+    NgSelectModule,
+    HttpClientModule
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
