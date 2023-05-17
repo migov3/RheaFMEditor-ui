@@ -22,6 +22,7 @@ button{
 
 mat-icon {
     margin-right: 8px;
+    color: white;
 }
 
 @media (max-width: 600px) {
@@ -47,16 +48,15 @@ mat-icon {
 
 mat-sidenav {
     background-image: linear-gradient(to bottom, #012970 12%, #9fc0fd, #fff);
-    color: white;
     font-size: 30px;
     border-right: solid black 2px;
+    width: 300px;
 }
 
 button {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    font-size: 1rem;
+    font-size: 1.25rem;
+    
+    margin-left: 10px;
 }
 
 mat-icon {
@@ -70,5 +70,5 @@ mat-divider {
 }
 
 mat-sidenav-content {
-    height: 100vh;
+    height: 92.21vh;
 }

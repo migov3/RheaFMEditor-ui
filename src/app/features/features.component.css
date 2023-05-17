@@ -1,0 +1,11 @@
+.example-tree-invisible {
+    display: none;
+}
+
+ul {
+    list-style-type: none;
+}
+
+.hidden-node-expanded {
+    display: block !important;
+  }

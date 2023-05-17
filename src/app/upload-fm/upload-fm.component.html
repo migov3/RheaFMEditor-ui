@@ -8,7 +8,7 @@
           <span class="file-label">Attach file</span>
         </div>
       </button>
-      <input id="fileInput" style="visibility: hidden;" type="file" accept=".uvl, .json, .xml, .sxfm" (change)="onFileSelected($event)" />
+      <input #fileInput id="fileInput" style="visibility: hidden;" type="file" accept=".uvl, .json, .xml, .sxfm" (input)="onFileSelected($event)" />
     </div>
   </li>
   <li>
@@ -16,7 +16,7 @@
       ...or select one:
       <mat-form-field style="margin: 10px;" appearance="outline" class="custom-select-field">
         <mat-label>Example FMs</mat-label>
-        <mat-select (selectionChange)="onExampleSelected($event)">
+        <mat-select (selectionChange)="onExampleSelected($event)" [(ngModel)]="selectedOption">
           <mat-option *ngFor="let fmExample of fmExamples" [value]="fmExample">{{fmExample}}</mat-option>
         </mat-select>
       </mat-form-field>
@@ -27,7 +27,7 @@
   </li>
   <li>
     <button mat-stroked-button color="primary" style="min-height: 35px; margin-left: 2px;" data-bs-toggle="modal"
-      href="#loading" [disabled]="!file" (click)="loadFeatures()">
+      href="#loading" [disabled]="!file && !selectedOption" (click)="loadFeatures()">
       <div class="upload-content">
         <img src="../assets/img/upload.png" alt="Upload Icon" class="upload-icon">
         <span class="upload-label">Upload file</span>

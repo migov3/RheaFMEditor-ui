@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-upload-fm',
@@ -8,28 +8,45 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UploadFMComponent implements OnInit {
 
+  @ViewChild('fileInput', { static: false }) fileInputRef: ElementRef | undefined;
+
   constructor(
     //TODO Esto deberia estar aparte en un servicio + interceptor/gestor de errores
     public http: HttpClient) { }
+
+  // Archivo ejemplo
+  selectedOption?: string;
+
+  // Archivo introducido por el usuario
   selectedFileName?: string;
   file?: File;
+
   //TODO La ruta a los endpoints deberian tener una variable de entorno
-  urldocuments = "http://127.0.0.1:5000/getExampleFMs";
-  urlupload = "http://127.0.0.1:5000/uploadFM";
+  env: string = "http://127.0.0.1:5000/"
+  urldocuments = this.env + "/getExampleFMs";
+  urluploadExample = this.env + "/uploadExampleFM";
+  urlupload = this.env + "/uploadFM";
+
   fmExamples: string[] = [];
 
-  onFileSelected(event: any) {
+  onFileSelected(event: any): void {
+    const inputElement = event.target as HTMLInputElement;
     const files: FileList = event.target.files; // Obtener los archivos seleccionados
     if (files.length > 0) {
       // TODO Replantear esto
-      console.log(files);
+      console.log(files[0]);
       this.file = event.target.files[0];
       this.selectedFileName = this.file?.name;
+      // Deseleccionamos el posible ejemplo
+      this.selectedOption = undefined;
     }
   }
 
-  onExampleSelected(event: any) {
+  onExampleSelected(event: any): void {
     this.selectedFileName = event.value;
+    if (this.fileInputRef) {
+      this.fileInputRef.nativeElement.value = '';
+    }
   }
 
   onFileInputClick(): void {
@@ -49,11 +66,16 @@ export class UploadFMComponent implements OnInit {
   loadFeatures(): void {
     //TODO Deberia llamar a un servicio que obtenga toda la info del FM
     const formData: FormData = new FormData();
-    formData.append('file', this.file!, this.file!.name); //TODO esto tengo que mirarlo en la parte del servidor ('file'?)
-    this.http.post(this.urlupload,formData,{withCredentials:true,responseType:'text'}).subscribe(fmData => {  
+    let upload: string = this.urlupload;
+    if (this.selectedOption) { // Subimos el ejemplo
+      upload = this.urluploadExample;
+      formData.append('filename', this.selectedOption);
+    } 
+    else { // Deberia existir siempre un archivo cargado
+      formData.append('file', this.file!, this.file!.name); //TODO esto tengo que mirarlo en la parte del servidor ('file'?)
+    }
+    this.http.post(upload, formData, { withCredentials: true, responseType: 'text' }).subscribe(fmData => {
       console.log(fmData);
-        }
-    );
+    });
   }
-
 }

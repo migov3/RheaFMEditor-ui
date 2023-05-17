@@ -1,6 +1,45 @@
 <ul style="list-style-type: none;">
     <h3>Features</h3>
 
-    <li>
-    </li>
+    <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+        <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
+            <li class="mat-tree-node" [style.paddingLeft.px]="node.level * 80">
+                <b>{{node.name}}</b>
+            </li>
+        </mat-tree-node>
+
+        <mat-tree-node *matTreeNodeDef="let node; when: isNode" matTreeNodeToggle>
+            <li>
+                <div class="mat-tree-node" [style.paddingLeft.px]="node.level * 60">
+                    <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name">
+                        <mat-icon class="mat-icon-rtl-mirror">
+                            {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                        </mat-icon>
+                    </button>
+                    {{node.name}}
+                </div>
+                <ul [class.example-tree-invisible]="!treeControl.isExpanded(node)">
+                    <ng-container matTreeNodeOutlet></ng-container>
+                </ul>
+            </li>
+        </mat-tree-node>
+
+        <mat-tree-node *matTreeNodeDef="let node; when: isRelationNode" matTreeNodeToggle>
+            <li>
+                <div class="mat-tree-node" [style.paddingLeft.px]="node.level * 60">
+                    <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name">
+                        <mat-icon class="mat-icon-rtl-mirror">
+                            {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                        </mat-icon>
+                    </button>
+                    {{node.name}}
+                </div>
+                <ul [class.example-tree-invisible]="!treeControl.isExpanded(node)">
+                    <ng-container matTreeNodeOutlet></ng-container>
+                </ul>
+            </li>
+        </mat-tree-node>
+        <mat-tree-node style="display:none !important;" *matTreeNodeDef="let node; when: isHidden" matTreeNodeToggle>
+        </mat-tree-node>
+    </mat-tree>
 </ul>
