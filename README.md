@@ -13,7 +13,7 @@ This web application provides a user-friendly interface for managing feature mod
 - [Acknowledgements](#acknowledgements)
 
 
-## Features
+## Features (WIP)
 
 - Upload your own feature model or select from pre-existing examples
 - View the tree representation of the feature model
@@ -27,7 +27,7 @@ This web application provides a user-friendly interface for managing feature mod
 
 ## Installation
 
-To run the Angular 15 Feature Model Tool locally on your machine, please follow these steps:
+To run the app locally on your machine, please follow these steps:
 
 1. Clone the repository:
 
@@ -38,7 +38,7 @@ git clone https://github.com/migov3/RheaFMEditor-ui.git
 2. Navigate to the project directory:
 
 ```console
-cd angular-15-feature-model-tool
+cd RheaFMEditor-ui
 ```
 
 3. Install the required dependencies using npm:
@@ -65,13 +65,14 @@ npm run start
 
 ## Usage
 
-Upon accessing the Angular 15 Feature Model Tool in your browser, you will be presented with the following options:
+Upon accessing in your browser, you will be presented with the following options:
 
-- **Upload Feature Model**: Use this option to upload your own feature model file in a supported format (e.g., XML, JSON).
+- **Upload Feature Model**: Use this option to upload your own feature model file in a supported format (e.g., UVL, SXFM, XML, JSON).
 - **Select Example**: Choose from a list of pre-existing feature model examples included with the application.
 
 Once a feature model is loaded, you can perform the following actions:
 
+## (WIP)
 - **View Tree**: Visualize the feature model as a tree structure.
 - **Edit Feature Model**: Modify the structure of the feature model by adding, deleting, or reordering nodes.
 - **Edit Node Attributes**: Customize the attributes of individual nodes in the feature model.
@@ -80,13 +81,3 @@ Once a feature model is loaded, you can perform the following actions:
 - **View Semantic Metrics**: Analyze semantic metrics to evaluate the quality and coherence of the feature model.
 - **Interoperability Matrix**: Use the matrix to restructure the feature model for different languages and formats.
 - **Download Feature Model**: Download the modified feature model in a language and format of your choice.
-
-
-## Contributing
-
-Contributions to the Angular 15 Feature Model Tool are welcome! If you encounter any issues, have suggestions for improvements, or would like to contribute new features, please feel free to open an issue or submit a pull request on the GitHub repository.
-
-
-## License
-
-The Angular 15 Feature Model Tool is open-source software released under the [MIT License](https://opensource.org/licenses/MIT).
