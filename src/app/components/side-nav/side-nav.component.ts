@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, Output, EventEmitter, Input, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
-import { SidenavService } from '../sidenav.service';
+import { SidenavService } from '../../services/sidenav/sidenav.service';
 import { BreakpointObserver } from '@angular/cdk/layout';
 
 @Component({
@@ -15,7 +15,6 @@ export class SideNavComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.sidenavService.setSidenav(this.sidenav);
-
     this.observer.observe(["(max-width: 800px)"]).subscribe((res) => {
       if (res.matches) {
         this.sidenav.mode = "over";
