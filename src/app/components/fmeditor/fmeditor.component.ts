@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MainNode } from 'src/app/interfaces/Nodes';
 
 export interface Tile {
   color: string;
@@ -13,6 +14,15 @@ export interface Tile {
   styleUrls: ['./fmeditor.component.css']
 })
 export class FMEditorComponent implements OnInit {
+
+  // Lo recibe del componente hijo upload-fm
+  fmData?: string;
+  featuresTree: MainNode | undefined;
+
+  fmDataHandler($event: any) {
+    this.fmData = $event;
+    this.featuresTree = $event.features;
+  }
 
   uploadfmTile: Tile = {text: 'Upload Feature model', cols: 3, rows: 3, color: 'none'};
   tiles: Tile[] = [

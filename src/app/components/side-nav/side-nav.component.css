@@ -50,7 +50,7 @@ mat-sidenav {
     background-image: linear-gradient(to bottom, #012970 12%, #9fc0fd, #fff);
     font-size: 30px;
     border-right: solid black 2px;
-    width: 300px;
+    width: 180px;
 }
 
 button {

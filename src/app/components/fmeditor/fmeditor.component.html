@@ -3,10 +3,10 @@
 <mat-card>
     <mat-card-content>
         <div class="card-container">
-            <mat-card class="card"><app-upload-fm></app-upload-fm></mat-card>
+            <mat-card class="card"><app-upload-fm (fmDataEvent)="fmDataHandler($event)"></app-upload-fm></mat-card>
             <mat-card class="card"><app-language-download></app-language-download></mat-card>
             <mat-card class="card"><app-log></app-log></mat-card>
-            <mat-card class="card"><app-features style="min-width: 600px;"></app-features></mat-card>
+            <mat-card class="card"><app-features [featuresTree]="featuresTree" style="min-width: 600px;"></app-features></mat-card>
         </div>
     </mat-card-content>
 </mat-card>

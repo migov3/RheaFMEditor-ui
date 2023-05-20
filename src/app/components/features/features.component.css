@@ -8,4 +8,8 @@ ul {
 
 .hidden-node-expanded {
     display: block !important;
-  }
+}
+
+.tree-img {
+    margin-right: 10px;
+}

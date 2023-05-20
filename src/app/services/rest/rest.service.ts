@@ -20,11 +20,11 @@ export class RestService {
   }
 
   getExampleFmInfo(formData: FormData) {
-    return this.http.post(this.urluploadExample, formData, { withCredentials: true, responseType: 'text' });
+    return this.http.post(this.urluploadExample, formData, { withCredentials: true, responseType: 'json' });
   }
 
   getFmInfo(formData: FormData) {
-    return this.http.post(this.urlupload, formData, { withCredentials: true, responseType: 'text' });
+    return this.http.post(this.urlupload, formData, { withCredentials: true, responseType: 'json' });
   }
   
 }

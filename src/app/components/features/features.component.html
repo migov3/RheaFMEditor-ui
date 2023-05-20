@@ -1,14 +1,16 @@
 <ul style="list-style-type: none;">
     <h3>Features</h3>
-
+    <mat-spinner *ngIf=""></mat-spinner>
     <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
         <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
-            <li class="mat-tree-node" [style.paddingLeft.px]="node.level * 40">
-                <b>{{node.name}}</b>
+            <li class="mat-tree-node" [style.paddingLeft.px]="node.level * 40 + 48">
+                <img class="tree-img" *ngIf="node.formattedName.includes(this.MANDATORY)" src="../../assets/img/mandatory.gif" alt="Mandatory"/>
+                <img class="tree-img" *ngIf="node.formattedName.includes(this.OPTIONAL)" src="../../assets/img/optional.gif" alt="Optional"/>
+                <b>{{ cleanRelationFromName(node.name) }}</b>
             </li>
         </mat-tree-node>
 
-        <mat-tree-node *matTreeNodeDef="let node; when: isNode" matTreeNodeToggle>
+        <mat-tree-node *matTreeNodeDef="let node; when: isNode">
             <li>
                 <div class="mat-tree-node" [style.paddingLeft.px]="node.level * 40">
                     <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name">
@@ -16,7 +18,11 @@
                             {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
                         </mat-icon>
                     </button>
-                    {{node.name}}
+                    <img class="tree-img" *ngIf="node.level == 0" src="../../assets/img/featuretree.ico" alt="Root">
+                    <img class="tree-img" *ngIf="node.formattedName.includes(this.MANDATORY)" src="../../assets/img/mandatory.gif" alt="Mandatory">
+                    <img class="tree-img" *ngIf="node.formattedName.includes(this.OPTIONAL)" src="../../assets/img/optional.gif" alt="Optional">
+                    {{ cleanRelationFromName(node.name) }}
+                    <button mat-raised-button (click)="openMainNodeDialog(node)">Edit</button>
                 </div>
                 <ul [class.example-tree-invisible]="!treeControl.isExpanded(node)">
                     <ng-container matTreeNodeOutlet></ng-container>
@@ -24,7 +30,7 @@
             </li>
         </mat-tree-node>
 
-        <mat-tree-node *matTreeNodeDef="let node; when: isRelationNode" matTreeNodeToggle>
+        <mat-tree-node *matTreeNodeDef="let node; when: isRelationNode">
             <li>
                 <div class="mat-tree-node" [style.paddingLeft.px]="node.level * 40">
                     <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name">
@@ -32,7 +38,12 @@
                             {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
                         </mat-icon>
                     </button>
-                    {{node.name}}
+                    <img class="tree-img" *ngIf="node.name.startsWith(this.OR)" src="../../assets/img/or.gif" alt="OR">
+                    <img class="tree-img" *ngIf="node.name.startsWith(this.XOR)" src="../../assets/img/xor.gif" alt="XOR">
+                    <img class="tree-img" *ngIf="node.name.startsWith(this.CARDINALITY)" src="../../assets/img/cardinality.gif" alt="OR">
+                    <img class="tree-img" *ngIf="node.name.startsWith(this.MUTEX)" src="../../assets/img/mutex.gif" alt="MUTEX">
+                    <img class="tree-img" *ngIf="node.name.startsWith(this.FEATURE)" src="../../assets/img/feature.gif" alt="FEATURE">
+                    {{ cleanRelationFromName(node.name) }}
                 </div>
                 <ul [class.example-tree-invisible]="!treeControl.isExpanded(node)">
                     <ng-container matTreeNodeOutlet></ng-container>

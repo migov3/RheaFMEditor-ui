@@ -13,7 +13,7 @@ import { FMEditorComponent } from './components/fmeditor/fmeditor.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { LanguageDownloadComponent } from './components/language-download/language-download.component';
 import { LogComponent } from './components/log/log.component';
-import { FeaturesComponent } from './components/features/features.component';
+import { DialogEditMainNode, DialogEditRelationNode, FeaturesComponent } from './components/features/features.component';
 import { ConstraintsComponent } from './components/constraints/constraints.component';
 import { InteropMatrixComponent } from './components/interop-matrix/interop-matrix.component';
 import { ConstraintTreeComponent } from './components/constraint-tree/constraint-tree.component';
@@ -37,7 +37,9 @@ import { HttpClientModule } from '@angular/common/http';
     ConstraintsComponent,
     InteropMatrixComponent,
     ConstraintTreeComponent,
-    SemanticsMetricsComponent
+    SemanticsMetricsComponent,
+    DialogEditMainNode,
+    DialogEditRelationNode
   ],
   imports: [
     BrowserModule,

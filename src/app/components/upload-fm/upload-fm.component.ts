@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { RestService } from 'src/app/services/rest/rest.service';
 
 @Component({
@@ -10,6 +10,7 @@ import { RestService } from 'src/app/services/rest/rest.service';
 export class UploadFMComponent implements OnInit {
 
   @ViewChild('fileInput', { static: false }) fileInputRef: ElementRef | undefined;
+  @Output() fmDataEvent = new EventEmitter<Object>();
 
   // Mientras se estan cargando los archivos se deshabilitan botones
   disable: boolean = false;
@@ -68,7 +69,7 @@ export class UploadFMComponent implements OnInit {
       formData.append('filename', this.selectedOption);
       this.http.getExampleFmInfo(formData).subscribe({
         next: fmData => {
-          console.log(fmData);
+          this.fmDataEvent.emit(fmData);
           this.disable = false;
         },
         error: error => this.disable = false
@@ -80,7 +81,7 @@ export class UploadFMComponent implements OnInit {
       formData.append('file', this.file, this.file.name);
       this.http.getFmInfo(formData).subscribe({
         next: fmData => {
-          console.log(fmData);
+          this.fmDataEvent.emit(fmData);
           this.disable = false;
         },
         error: error => this.disable = false
