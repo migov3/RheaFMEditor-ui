@@ -1,0 +1,29 @@
+<div>
+    <p class="node" *ngIf="node.relations.length > 0">
+        <button (click)="expanded = !expanded" mat-icon-button [attr.aria-label]="'Toggle ' + node.name">
+            <mat-icon class="mat-icon-rtl-mirror">
+                {{expanded ? 'expand_more' : 'chevron_right'}}
+            </mat-icon>
+        </button>
+        <img class="tree-img" [src]="imageUrl" [alt]="alt" /> {{ node.name }}
+        <button mat-icon-button class="edit-button" (click)="openMainNodeDialog(node)">
+            <mat-icon>edit</mat-icon>
+        </button>
+    </p>
+    <p class="node" *ngIf="node.relations.length == 0">
+        <button style="visibility: hidden;" mat-icon-button>
+            <mat-icon class="mat-icon-rtl-mirror">
+                {{expanded ? 'expand_more' : 'chevron_right'}}
+            </mat-icon>
+        </button>
+        <img class="tree-img" src="../../assets/img/OPTIONAL.gif" alt="OPTIONAL" /> <strong> {{ node.name }} </strong>
+        <button mat-icon-button class="edit-button" (click)="openMainNodeDialog(node)">
+            <mat-icon>edit</mat-icon>
+        </button>
+    </p>
+    <ul *ngIf="expanded">
+        <li *ngFor="let relation of node.relations">
+            <app-relation-node [node]="relation"></app-relation-node>
+        </li>
+    </ul>
+</div>

@@ -1,12 +1,18 @@
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { Component, Inject, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { MANDATORY_RELATION, OPTIONAL_RELATION, XOR_RELATION, OR_RELATION, CARDINALITY_RELATION, MUTEX_RELATION, FEATURE_RELATION } from 'src/app/constants';
+import { Attribute } from 'src/app/interfaces/Attribute';
 import { MainNode, RelationNode, FlatNode } from 'src/app/interfaces/Nodes';
+import { RestService } from 'src/app/services/rest/rest.service';
+import { DialogEditMainNode } from '../new-features/main-node/main-node.component';
 
 export interface MainNodeDialogData {
+    mainNode: MainNode;
     node: FlatNode;
+    hash: string;
 }
 
 export interface RelationNodeDialogData {
@@ -19,11 +25,14 @@ export interface RelationNodeDialogData {
     styleUrls: ['./features.component.css']
 })
 export class FeaturesComponent implements OnChanges {
-    @Input() featuresTree?: MainNode = // Example feature tree
+    @Input() uploading?: boolean;
+    @Input() fmData?: any;
+    hash?: string;
+    featuresTree?: MainNode = // Example feature tree
         {
             "name": "JHipster",
             "abstract": true,
-            "relations": [
+            "relations": [ 
                 {
                     "type": "MANDATORY",
                     "card_min": 1,
@@ -500,17 +509,21 @@ export class FeaturesComponent implements OnChanges {
             "attributes": [
                 {
                     "name": "extended__",
-                    "test1": "test2"
+                    "value": "test2"
                 },
                 {
-                    "test3": "test4"
+                    "name": "test4"
                 }
             ]
         };
 
     ngOnChanges(changes: SimpleChanges) {
-        console.log(changes["featuresTree"]);
-        if (this.featuresTree && changes["featuresTree"].currentValue) {
+       // console.log("CAMBIO EN EL FM");
+        //console.log(changes["fmData"]);
+        
+        if (changes["fmData"] && this.fmData && changes["fmData"].currentValue){
+            this.hash = this.fmData.hash;
+            this.featuresTree = this.fmData.features as MainNode;
             this.setDataSource(this.featuresTree);
             this.expandRoot();
         }
@@ -572,12 +585,18 @@ export class FeaturesComponent implements OnChanges {
     openMainNodeDialog(node: FlatNode) {
         const dialogRef = this.dialog.open(DialogEditMainNode, {
             width: '650px',
-            data: { node: node }
+            data: { mainNode: this.featuresTree, node: node, hash: this.hash }
         });
     }
 
-
-
+    probar2() {
+        console.log(this.treeControl.dataNodes);
+        this.featuresTree!.name = "HOLA";
+        //this.setDataSource(this.featuresTree!);
+        console.log(this.hash);
+        this.expandRoot();
+    }
+    
     private _transformer = (node: MainNode | RelationNode) => {
         if (node instanceof Object && 'name' in node) {
             let formattedName = node.name;
@@ -628,6 +647,7 @@ export class FeaturesComponent implements OnChanges {
     dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
     setDataSource(root: MainNode) {
+        console.log(root);
         this.dataSource.data = [root];
     }
 
@@ -654,58 +674,9 @@ export class FeaturesComponent implements OnChanges {
 
 }
 
-
-@Component({
-    selector: 'dialog-edit-mainnode',
-    templateUrl: 'dialog-edit-mainnode.html',
-    styleUrls: ['dialog-edit.css']
-})
-export class DialogEditMainNode {
-
-    node!: FlatNode;
-    name?: string;
-    abstract?: boolean;
-    attributes: any[] = [];
-    
-    constructor(
-        public dialogRef: MatDialogRef<DialogEditMainNode>,
-        @Inject(MAT_DIALOG_DATA) public data: MainNodeDialogData) {
-            this.node = data.node;
-            this.abstract = this.node.abstract;
-            this.name = this.node.name;
-            this.node.attributes.forEach(v => {
-                this.attributes.push(v);
-                console.log(v);
-            });
-        }
-
-    onNoClick(): void {
-        this.closeDialog();
-    }
-
-    // TODO No funciona correctamente
-    addAttribute(): void {
-        this.attributes.push({ '' : '' });
-    }
-
-    submitForm(): void {
-        if(this.name) this.node.name = this.name;
-        this.node.abstract = this.abstract || this.node.abstract;
-        // TODO No lo recibe correctamente, fallo al bindear en el html
-        this.node.attributes = this.attributes;
-        console.log(this.node);
-    }
-
-    closeDialog(): void {
-        this.dialogRef.close();
-    }
-
-}
-
 @Component({
     selector: 'dialog-edit-relationnode',
-    templateUrl: 'dialog-edit-relationnode.html',
-    styleUrls: ['dialog-edit.css']
+    templateUrl: 'dialog-edit-relationnode.html'
 })
 export class DialogEditRelationNode {
 

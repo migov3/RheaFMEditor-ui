@@ -13,3 +13,11 @@ ul {
 .tree-img {
     margin-right: 10px;
 }
+
+.edit-button {
+    transform: scale(0.7);
+}
+
+.spinner {
+    margin:0 auto;
+}

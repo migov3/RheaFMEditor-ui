@@ -1,6 +1,17 @@
 <ul style="list-style-type: none;">
     <h3>Select language to download</h3>
     <li>
-        Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsumLorem ipsum Lorem ipsum Lorem ipsum
+        <form (ngSubmit)="download()">
+            <mat-form-field>
+                <mat-label>Select a language</mat-label>
+                <mat-select [(ngModel)]="selectedLanguage" name="language">
+                    <mat-option *ngFor="let language of languages" [value]="language[1]">
+                        {{language[0]}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <button [disabled]="!this.hash || !selectedLanguage" style="margin: 15px" mat-raised-button color="primary" type="submit">
+                <mat-icon>download</mat-icon>Download</button>
+        </form>
     </li>
 </ul>

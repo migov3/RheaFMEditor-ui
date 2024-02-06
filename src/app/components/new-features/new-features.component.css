@@ -1,0 +1,16 @@
+ul {
+    list-style-type: none;
+}
+
+.tree-img {
+    margin-right: 10px;
+}
+
+.spinner {
+    margin:0 auto;
+}
+
+.node {
+    align-items: center;
+    display: flex;
+}

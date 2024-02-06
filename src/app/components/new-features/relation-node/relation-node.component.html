@@ -1,0 +1,22 @@
+<div *ngIf="show">
+    <p class="node">
+        <button (click)="expanded = !expanded" mat-icon-button [attr.aria-label]="'Toggle ' + node.type">
+            <mat-icon class="mat-icon-rtl-mirror">
+                {{expanded ? 'expand_more' : 'chevron_right'}}
+            </mat-icon>
+        </button>
+        <img class="tree-img" [src]="imageUrl" [alt]="alt" /> 
+        <{{ node.card_min }} .. {{ node.card_max }}>
+    </p>
+    <ul *ngIf="expanded">
+        <li *ngFor="let mainNode of node.children">
+            <app-main-node [type]="type" [node]="mainNode"></app-main-node>
+        </li>
+    </ul>
+</div>
+
+<div *ngIf="!show">
+    <li *ngFor="let mainNode of node.children">
+        <app-main-node [type]="type" [node]="mainNode"></app-main-node>
+    </li>
+</div>

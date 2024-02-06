@@ -1,0 +1,6 @@
+<ul>
+    <h3>Features</h3>
+    <mat-spinner class="spinner" *ngIf="uploading"></mat-spinner>
+    <app-main-node *ngIf="!uploading" [node]="rootNode" [fm]="fmData"></app-main-node>
+    <button (click)="a()">A</button>
+</ul>

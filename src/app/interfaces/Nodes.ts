@@ -1,9 +1,10 @@
+import { Attribute } from "./Attribute";
 
 export interface MainNode {
     name: string;
     abstract: boolean;
     relations: RelationNode[];
-    attributes: any[];
+    attributes: Attribute[];
   }
 
   export interface RelationNode {

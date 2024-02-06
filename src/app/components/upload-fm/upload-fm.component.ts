@@ -10,10 +10,15 @@ import { RestService } from 'src/app/services/rest/rest.service';
 export class UploadFMComponent implements OnInit {
 
   @ViewChild('fileInput', { static: false }) fileInputRef: ElementRef | undefined;
+
+  // Pasa los datos del FM recibidos de la llamada al endpoint de /uploadFM o /uploadExampleFM
   @Output() fmDataEvent = new EventEmitter<Object>();
 
   // Mientras se estan cargando los archivos se deshabilitan botones
-  disable: boolean = false;
+  // El resto de módulos quedan a la espera -> Pasar al padre y gestionar
+  @Output() uploading = new EventEmitter<Object>();
+
+  disable = false;
 
   constructor(
     //TODO Esto deberia estar aparte en un servicio + interceptor/gestor de errores
@@ -64,28 +69,36 @@ export class UploadFMComponent implements OnInit {
   loadFeatures(): void {
     const formData: FormData = new FormData();
     this.disable = true;
-
+    this.uploading.emit(this.disable);
     if (this.selectedOption) {
       formData.append('filename', this.selectedOption);
       this.http.getExampleFmInfo(formData).subscribe({
         next: fmData => {
           this.fmDataEvent.emit(fmData);
           this.disable = false;
+          this.uploading.emit(this.disable);
         },
-        error: error => this.disable = false
+        error: error => {
+          this.disable = false;
+          this.uploading.emit(this.disable);
+        } 
       });
     } else {
       if (!this.file) {
-        throw new Error('A file must be loaded.'); // Throw an error if no file is loaded
+        throw new Error('A file must be loaded.'); // Lanza un error si no hay archivos cargados
       }
       formData.append('file', this.file, this.file.name);
       this.http.getFmInfo(formData).subscribe({
         next: fmData => {
+          console.log(fmData);
           this.fmDataEvent.emit(fmData);
           this.disable = false;
+          this.uploading.emit(this.disable);
         },
-        error: error => this.disable = false
-      });
+        error: ignored => {
+          this.disable = false;
+          this.uploading.emit(this.disable);
+      }});
     }
   }
 }

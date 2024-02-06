@@ -8,18 +8,16 @@
           <span class="file-label">Attach file</span>
         </div>
       </button>
-      <input #fileInput id="fileInput" style="visibility: hidden;" type="file" accept=".uvl, .json, .xml, .sxfm" (input)="onFileSelected($event)" />
-    </div>
-  </li>
-  <li>
-    <div style="margin-left: 15px;">
-      ...or select one:
-      <mat-form-field style="margin: 10px;" appearance="outline" class="custom-select-field">
-        <mat-label>Example FMs</mat-label>
-        <mat-select (selectionChange)="onExampleSelected($event)" [disabled]="disable" [(ngModel)]="selectedOption">
-          <mat-option *ngFor="let fmExample of fmExamples" [value]="fmExample">{{fmExample}}</mat-option>
-        </mat-select>
-      </mat-form-field>
+      <input style="display: none" #fileInput id="fileInput" type="file" accept=".uvl, .json, .xml, .sxfm"
+        (input)="onFileSelected($event)" />
+      <div style="margin: 15px" class="upload-content">...or select one of the examples:
+        <mat-form-field style="margin: 10px; margin-top: 30px;" appearance="outline" class="custom-select-field">
+          <mat-label>Example FMs</mat-label>
+          <mat-select (selectionChange)="onExampleSelected($event)" [disabled]="disable" [(ngModel)]="selectedOption">
+            <mat-option *ngFor="let fmExample of fmExamples" [value]="fmExample">{{fmExample}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
     </div>
   </li>
   <li>

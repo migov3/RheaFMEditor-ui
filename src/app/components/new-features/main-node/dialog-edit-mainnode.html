@@ -1,0 +1,44 @@
+<h2 mat-dialog-title>Edit features</h2>
+<div mat-dialog-content>
+    <form [formGroup]="editForm" (ngSubmit)="submitForm()">
+        <h3>Properties</h3>
+        <mat-form-field class="small-input">
+            <mat-label>Name</mat-label>
+            <input matInput placeholder="Node name" formControlName="name" maxlength="30" />
+            <mat-error *ngIf="editForm.get('name')?.invalid">
+                Name is required and cannot exceed 30 characters
+            </mat-error>
+        </mat-form-field>
+
+        <mat-checkbox formControlName="abstract">Abstract</mat-checkbox>
+
+        <h3>Attributes</h3>
+        <div formArrayName="attributes">
+            <div *ngFor="let attribute of attributesArray.controls; let i = index" [formGroupName]="i">
+                <mat-form-field class="small-input">
+                    <mat-label>Name</mat-label>
+                    <input matInput placeholder="Ex. cost" formControlName="name">
+                </mat-form-field>
+                <mat-form-field class="small-input">
+                    <mat-label>Value</mat-label>
+                    <input matInput placeholder="Ex. 1.5" formControlName="value">
+                </mat-form-field>
+                <button mat-icon-button type="button" (click)="removeItem(i)">
+                    <mat-icon>remove</mat-icon>
+                </button>
+                <mat-divider class="divider"></mat-divider>
+            </div>
+        </div>
+        <button class="add-button" type="button" mat-icon-button (click)="addAttribute()">
+            <mat-icon>add</mat-icon>
+        </button>
+        <mat-divider></mat-divider>
+        <button style="margin-top: 20px" mat-button color="primary" type="submit" [disabled]="this.editForm.invalid">
+            Update
+        </button>
+    </form>
+</div>
+<mat-divider class="divider"></mat-divider>
+<div mat-dialog-actions align="end">
+    <button mat-button (click)="closeDialog()">Close</button>
+</div>
