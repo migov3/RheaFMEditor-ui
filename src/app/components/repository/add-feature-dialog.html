@@ -1,0 +1,26 @@
+<h2 mat-dialog-title>Add Feature Model</h2>
+<mat-dialog-content>
+  <form [formGroup]="addFm" (ngSubmit)="addFeatureModel()">
+    <mat-form-field class="full-width" appearance="fill">
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name" required/>
+    </mat-form-field>
+    <mat-form-field class="full-width" appearance="fill">
+      <mat-label>Description</mat-label>
+      <input matInput formControlName="description"/>
+    </mat-form-field>
+    <mat-form-field class="full-width" appearance="fill">
+      <mat-label>DOI</mat-label>
+      <input matInput formControlName="doi"/>
+    </mat-form-field>
+    <div class="file-input-container full-width">
+      <label for="fileInput" class="file-input-label">Choose a file</label>
+      <input id="fileInput" type="file" (change)="onFileChange($event)" class="file-input"/>
+      {{ selectedFile?.name }}
+    </div>
+    <mat-dialog-actions align="end">
+        <button mat-button mat-dialog-close>Cancel</button>
+        <button mat-button color="primary" [disabled]="!addFm.valid || !selectedFile" type="submit">Add</button>
+      </mat-dialog-actions>
+  </form>
+</mat-dialog-content>

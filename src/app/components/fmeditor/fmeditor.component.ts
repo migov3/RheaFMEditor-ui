@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FeatureModel } from 'src/app/interfaces/FeatureModel';
-import { MainNode } from 'src/app/interfaces/Nodes';
 
 export interface Tile {
   color: string;
@@ -16,10 +15,21 @@ export interface Tile {
 })
 export class FMEditorComponent implements OnInit {
 
+    uploading?: boolean;
+  
+    uploadingHandler($event: any) {
+      this.uploading = $event;
+    }
+    
+    constructor() {}
+
+    ngOnInit(): void {
+    }
+
   // Lo recibe del componente hijo upload-fm
   fmData: FeatureModel = {
     "name": "FM_Pizza",
-    "hash": "5423399298739757895",
+    "hash": "1145420170697761112",
     "features": {
         "name": "Pizza",
         "abstract": true,
@@ -694,39 +704,14 @@ export class FMEditorComponent implements OnInit {
         }
     ]
   };
-  hash?: string;
   fmName?: string;
-  uploading?: boolean;
+  hashList: string[] = [];
 
-  uploadingHandler($event: any) {
-    this.uploading = $event;
-  }
 
-  fmDataHandler($event: any) {
+  fmDataHandler($event: FeatureModel) {
+    console.log($event);
     this.fmData = $event;
-    this.hash = $event.hash;
     this.fmName = $event.name;
-  }
-
-  hashHandler($event: string) {
-    this.hash = $event;
-  }
-
-  // uploadfmTile: Tile = {text: 'Upload Feature model', cols: 3, rows: 3, color: 'none'};
-  // tiles: Tile[] = [
-  //   {text: 'Upload Feature model', cols: 3, rows: 3, color: 'none'},
-  //   {text: 'Select language to download', cols: 3, rows: 3, color: 'lightgreen'},
-  //   {text: 'Log', cols: 4, rows: 4, color: 'lightpink'},
-  //   {text: 'Features', cols: 5, rows: 5, color: '#DDBDF1'},
-  //   {text: 'Interoperability matrix', cols: 5, rows: 7, color: 'red'},
-  //   {text: 'Constraints', cols: 5, rows: 3, color: 'blue'},
-  //   {text: 'Constraint Tree', cols: 5, rows: 2, color: 'white'},
-  //   {text: 'Semantics metrics', cols: 5, rows: 5, color: 'blackz'}
-  // ];
-  
-  constructor() { }
-
-  ngOnInit(): void {
   }
 
 }

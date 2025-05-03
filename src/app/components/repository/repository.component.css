@@ -1,0 +1,61 @@
+.container {
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+.feature-card {
+    margin: 20px;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.red {
+    color: red;
+}
+
+.green {
+    color: green;
+}
+
+button {
+    margin: 20px;
+}
+
+mat-list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 10px 0;
+}
+
+mat-list-item h3 {
+    margin: 0;
+}
+
+mat-list-item p {
+    margin: 0;
+    color: gray;
+}
+
+.file-input-container {
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .file-input-label {
+    margin-right: 16px;
+    background-color: #3f51b5;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .file-input {
+    display: none;
+  }

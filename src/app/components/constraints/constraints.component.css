@@ -1,0 +1,41 @@
+ul {
+    list-style-type: none;
+}
+
+.tree-img {
+    margin-right: 10px;
+}
+
+.spinner {
+    margin:0 auto;
+}
+
+.node {
+    font-size: 14px;
+    align-items: center;
+    display: flex;
+}
+
+.edit-button {
+    transform: scale(0.75);
+}
+
+.small-input {
+    margin-right: 25px;
+}
+
+.divider {
+  margin-bottom: 20px;
+}
+
+.attribute-row {
+  margin-bottom: 10px;
+}
+
+.key-input {
+  margin-right: 10px;
+}
+
+.add-button {
+  margin-bottom: 20px;
+}

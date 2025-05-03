@@ -10,7 +10,7 @@
                     </mat-option>
                 </mat-select>
             </mat-form-field>
-            <button [disabled]="!this.hash || !selectedLanguage" style="margin: 15px" mat-raised-button color="primary" type="submit">
+            <button [disabled]="!this.updateService.getCurrentHash() || !selectedLanguage" style="margin: 15px" mat-raised-button color="primary" type="submit">
                 <mat-icon>download</mat-icon>Download</button>
         </form>
     </li>

@@ -1,1 +1,21 @@
-<p>constraints works!</p>
+<ul>
+    <h3>Constraints</h3>
+    <div *ngIf="!uploading" align="right"><button (click)="addConstraint()" mat-button>Add constraint</button></div>
+    <mat-spinner class="spinner" *ngIf="uploading"></mat-spinner>
+    <mat-list *ngIf="!uploading">
+        <mat-list-item *ngFor="let constraint of (constraints | slice: lowValue : highValue); index as i;">
+            <button mat-button [matMenuTriggerFor]="menu"><mat-icon>edit</mat-icon></button>
+            <mat-menu #menu="matMenu">
+                <button (click)="editConstraint(constraint)" mat-menu-item>Edit constraint</button>
+                <button (click)="removeConstraint(i)" mat-menu-item>Remove constraint</button>
+            </mat-menu>
+            {{ constraint.expr }}
+        </mat-list-item>
+    </mat-list>
+    <mat-paginator (page)="getPaginatorData($event)" [length]="length"
+                [pageSize]="pageSize"
+                [hidePageSize]="uploading || hidePaginator"
+                [pageSizeOptions]="pageSizeOptions"
+                aria-label="Select page">
+    </mat-paginator>
+</ul>

@@ -3,7 +3,7 @@
         <div>
             <button mat-button color="primary" (click)="toggle()" class="nav-text">
                     <mat-icon [ngStyle]="{'color':'white'}" *ngIf="!this.sidenav.opened">menu</mat-icon>
-                    <mat-icon [ngStyle]="{'color':'white'}" *ngIf="this.sidenav.opened">navigate_before</mat-icon><span class="disappear">Rhea Web</span>
+                    <mat-icon [ngStyle]="{'color':'white'}" *ngIf="this.sidenav.opened">navigate_before</mat-icon><span class="disappear">FM Editor & Repository</span>
             </button>
         </div>
         <!-- ========== Header =================== -->
@@ -14,11 +14,9 @@
 <mat-sidenav-container>
     <mat-sidenav #sidenav mode="side">
         <div>
-            <button mat-button routerLink="/"><mat-icon>info</mat-icon><span>Guide</span></button>
-            <mat-divider></mat-divider>
             <button mat-button routerLink="fm-editor"><mat-icon>edit</mat-icon><span>FM Editor</span></button>
             <mat-divider></mat-divider>
-            <button mat-button routerLink="/"><mat-icon>people</mat-icon><span>About us</span></button>
+            <button mat-button routerLink="repository"><mat-icon>backup</mat-icon><span>Repository</span></button>
         </div>
     </mat-sidenav>
     <mat-sidenav-content>

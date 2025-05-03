@@ -1,5 +1,5 @@
 .header {
-    background-image: linear-gradient(to right, #012970 12%, #9fc0fd, #fff);
+    background-image: linear-gradient(to right, #012970 12%, #161035, #0e025e);
 }
 
 .nav-text {
@@ -47,7 +47,7 @@ mat-icon {
 }
 
 mat-sidenav {
-    background-image: linear-gradient(to bottom, #012970 12%, #9fc0fd, #fff);
+    background-image: linear-gradient(to bottom, #012970 12%, #020202, #0e025e);
     font-size: 30px;
     border-right: solid black 2px;
     width: 180px;

@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FMEditorComponent } from './components/fmeditor/fmeditor.component';
-import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { RepositoryComponent } from './components/repository/repository.component';
 
 const routes: Routes = [
   { path: 'fm-editor', component: FMEditorComponent },
+  { path: 'repository', component: RepositoryComponent },
   { path: '', redirectTo: 'fm-editor', pathMatch: 'full'},
-  { path: '**', component: PageNotFoundComponent } // Wildcard route for a 404 page
+  { path: '**', redirectTo: 'fm-editor'}
 ];
 
 @NgModule({

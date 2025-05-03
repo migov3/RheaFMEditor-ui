@@ -1,0 +1,31 @@
+ul {
+    list-style-type: none;
+}
+
+.tree-img {
+    margin-right: 10px;
+}
+
+.spinner {
+    margin:0 auto;
+}
+
+.node {
+    font-size: 14px;
+    align-items: center;
+    display: flex;
+}
+
+.edit-button {
+    transform: scale(0.75);
+}
+
+table {
+    padding: 20px
+}
+
+th.mat-header-cell,
+td.mat-cell {
+    padding: 10px;
+    text-align: left;
+}

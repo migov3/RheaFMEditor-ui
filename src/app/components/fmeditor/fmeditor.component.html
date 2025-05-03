@@ -3,11 +3,13 @@
 <mat-card>
     <mat-card-content>
         <div class="card-container">
-            <mat-card class="card"><app-upload-fm (uploading)="uploadingHandler($event)" (fmDataEvent)="fmDataHandler($event)"></app-upload-fm></mat-card>
-            <mat-card class="card"><app-language-download [fmName]="fmName" [hash]="hash"></app-language-download></mat-card>
-            <mat-card class="card"><app-log></app-log></mat-card>
-            <mat-card class="card"><app-features [fmData]="fmData" [uploading]="uploading" style="min-width: 450px;"></app-features></mat-card>
-            <mat-card class="card"><app-new-features (hash)="hashHandler($event)" [fmData]="fmData" [uploading]="uploading" style="min-width: 450px;"></app-new-features></mat-card>
+            <mat-card class="card"><app-upload-fm class="upload" (uploading)="uploadingHandler($event)" (fm)="fmDataHandler($event)"></app-upload-fm></mat-card>
+            <mat-card class="card"><app-language-download class="language" [fmName]="fmName"></app-language-download></mat-card>
+            <mat-card class="card"><app-log class="log" (fm)="fmDataHandler($event)" [extUploading]="uploading" (uploading)="uploadingHandler($event)"></app-log></mat-card>
+            <mat-card class="card"><app-new-features class="features" [fmData]="fmData" (fm)="fmDataHandler($event)" [extUploading]="uploading" (uploading)="uploadingHandler($event)"></app-new-features></mat-card>
+            <mat-card class="card"><app-constraints class="constraints" [fmData]="fmData" (fm)="fmDataHandler($event)" [uploading]="uploading"></app-constraints></mat-card>
+            <mat-card class="card"><app-interop-matrix class="interop" [fmData]="fmData" (fm)="fmDataHandler($event)" [extUploading]="uploading" (uploading)="uploadingHandler($event)"></app-interop-matrix></mat-card>
+            <mat-card class="card"><app-semantics-metrics class="semantic" [fmData]="fmData" (fm)="fmDataHandler($event)" [uploading]="uploading"></app-semantics-metrics></mat-card>
         </div>
     </mat-card-content>
 </mat-card>

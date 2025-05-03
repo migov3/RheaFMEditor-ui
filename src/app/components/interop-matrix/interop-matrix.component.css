@@ -1,0 +1,36 @@
+.green-icon {
+    color: green;
+}
+
+.red-icon {
+    color: red;
+}
+
+.orange-icon {
+    color: orange;
+}
+
+ul {
+    list-style-type: none;
+}
+
+.tree-img {
+    margin-right: 10px;
+}
+
+.spinner {
+    margin:0 auto;
+}
+
+.center-icons {
+    text-align: center;
+}
+
+.edit-button {
+    transform: scale(0.75);
+}
+
+.refactor {
+    margin-left: 15px;
+}
+

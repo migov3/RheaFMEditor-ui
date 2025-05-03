@@ -1,7 +1,14 @@
-<ul style="list-style-type: none;">
-    <h3>Log</h3>
-
-    <li>
-        Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem
-    </li>
+<ul>
+  <h3 class="change-log-title">Action log</h3>
+</ul>
+<div class="change-log-container" #changeLogContainer>
+  <mat-list class="change-log-content">
+    <mat-list-item *ngFor="let log of logs">{{ log }}</mat-list-item>
+  </mat-list>
+</div>
+<ul>
+  <mat-icon mat-button *ngIf="!canUndo || extUploading" class="gray" disabled>undo</mat-icon>
+  <mat-icon mat-button *ngIf="canUndo && !extUploading" class="black" (click)="undo()">undo</mat-icon>
+  <mat-icon mat-button *ngIf="!canRedo || extUploading" class="gray" disabled>redo</mat-icon>
+  <mat-icon mat-button *ngIf="canRedo && !extUploading" class="black" (click)="redo()">redo</mat-icon>
 </ul>

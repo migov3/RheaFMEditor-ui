@@ -7,16 +7,19 @@
         </button>
         <img class="tree-img" [src]="imageUrl" [alt]="alt" /> 
         <{{ node.card_min }} .. {{ node.card_max }}>
+        <button mat-icon-button class="edit-button" (click)="openRelationNodeDialog(node)">
+            <mat-icon>edit</mat-icon>
+        </button>
     </p>
     <ul *ngIf="expanded">
         <li *ngFor="let mainNode of node.children">
-            <app-main-node [type]="type" [node]="mainNode"></app-main-node>
+            <app-main-node (toParentRelationNode)="mainNodeHandler($event)" [type]="type" [node]="mainNode"></app-main-node>
         </li>
     </ul>
 </div>
 
 <div *ngIf="!show">
     <li *ngFor="let mainNode of node.children">
-        <app-main-node [type]="type" [node]="mainNode"></app-main-node>
+        <app-main-node (toParentRelationNode)="mainNodeHandler($event)" [type]="type" [node]="mainNode"></app-main-node>
     </li>
 </div>

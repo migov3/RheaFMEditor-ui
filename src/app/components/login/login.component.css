@@ -1,0 +1,20 @@
+.full-width {
+    width: 100%;
+}
+
+.gray {
+    background-color: rgb(222, 209, 209);
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+}
+
+.button-container {
+    margin-right: 10px;
+}
+
+.login {
+    margin: 20px;
+}

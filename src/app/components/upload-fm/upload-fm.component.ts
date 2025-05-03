@@ -1,6 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { FeatureModel } from 'src/app/interfaces/FeatureModel';
 import { RestService } from 'src/app/services/rest/rest.service';
+import { UpdateService } from 'src/app/services/update/update.service';
+import { AddFeatureModelDialog } from '../repository/repository.component';
 
 @Component({
   selector: 'app-upload-fm',
@@ -9,20 +13,19 @@ import { RestService } from 'src/app/services/rest/rest.service';
 })
 export class UploadFMComponent implements OnInit {
 
-  @ViewChild('fileInput', { static: false }) fileInputRef: ElementRef | undefined;
-
-  // Pasa los datos del FM recibidos de la llamada al endpoint de /uploadFM o /uploadExampleFM
-  @Output() fmDataEvent = new EventEmitter<Object>();
-
   // Mientras se estan cargando los archivos se deshabilitan botones
   // El resto de módulos quedan a la espera -> Pasar al padre y gestionar
   @Output() uploading = new EventEmitter<Object>();
 
+  @ViewChild('fileInput', { static: false }) fileInputRef: ElementRef | undefined;
+
+  // Pasa los datos del FM recibidos de la llamada al endpoint de /uploadFM o /uploadExampleFM
+  @Output() fm = new EventEmitter<FeatureModel>();
+
   disable = false;
 
-  constructor(
-    //TODO Esto deberia estar aparte en un servicio + interceptor/gestor de errores
-    public http: RestService) { }
+  constructor(public dialog: MatDialog,
+    public http: RestService, private updateService: UpdateService) { }
 
   // Archivo ejemplo
   selectedOption?: string;
@@ -37,7 +40,7 @@ export class UploadFMComponent implements OnInit {
     const files: FileList = event.target.files; // Obtener los archivos seleccionados
     if (files.length > 0) {
       // TODO Replantear esto
-      console.log(files[0]);
+      //console.log(files[0]);
       this.file = event.target.files[0];
       this.selectedFileName = this.file?.name;
       // Deseleccionamos el posible ejemplo
@@ -57,48 +60,74 @@ export class UploadFMComponent implements OnInit {
     fileInput?.click();
   }
 
+  successfulUpload(fmData: FeatureModel) {
+    this.updateService.addHash(fmData.hash);
+    this.fm.emit(fmData);
+    this.disable = false;
+    this.uploading.emit(this.disable);
+    this.updateService.lastAction.next({name: "upload", success: true, payload: fmData.name});
+  }
+
   ngOnInit(): void {
-    //TODO Esto es temporal deberia estar en un servicio
     this.http.getExampleFMFilenames().subscribe(fmExamples => {
       for (const fm of (fmExamples as string[])) {
         this.fmExamples.push(fm);
       }
+      const formData: FormData = new FormData();
+      this.disable = true;
+      this.uploading.emit(this.disable);
+      formData.append('filename', fmExamples[0]);
+      this.http.getExampleFmInfo(formData).subscribe({ // Como ejemplo inicial
+        next: (fmData: FeatureModel) => {
+          this.successfulUpload(fmData);
+        },
+        error: (error: any) => {
+          this.disable = false;
+          this.uploading.emit(this.disable);
+          this.updateService.lastAction.next({name: "upload", success: false, payload: error});
+        }
     });
+  });
+    
   }
 
   loadFeatures(): void {
     const formData: FormData = new FormData();
     this.disable = true;
     this.uploading.emit(this.disable);
-    if (this.selectedOption) {
+    if (this.selectedOption) { // Se ha seleccionado un ejemplo
       formData.append('filename', this.selectedOption);
       this.http.getExampleFmInfo(formData).subscribe({
-        next: fmData => {
-          this.fmDataEvent.emit(fmData);
-          this.disable = false;
-          this.uploading.emit(this.disable);
+        next: (fmData: FeatureModel) => {
+          this.successfulUpload(fmData);
         },
-        error: error => {
+        error: (error: any) => {
           this.disable = false;
           this.uploading.emit(this.disable);
-        } 
+          this.updateService.lastAction.next({name: "upload", success: false, payload: error});
+        }
       });
-    } else {
+    } else { // Se ha subido un archivo
       if (!this.file) {
         throw new Error('A file must be loaded.'); // Lanza un error si no hay archivos cargados
       }
       formData.append('file', this.file, this.file.name);
       this.http.getFmInfo(formData).subscribe({
-        next: fmData => {
-          console.log(fmData);
-          this.fmDataEvent.emit(fmData);
+        next: (fmData: FeatureModel) => {
+          //console.log(fmData);
+          this.successfulUpload(fmData);
+        }, 
+        error: (error: any) => {
+          console.log(error);
           this.disable = false;
           this.uploading.emit(this.disable);
-        },
-        error: ignored => {
-          this.disable = false;
-          this.uploading.emit(this.disable);
-      }});
+          this.updateService.lastAction.next({name: "upload", success: false, payload: error});
+      }
+    });
     }
+  }
+
+  sendToRepo() {
+    
   }
 }

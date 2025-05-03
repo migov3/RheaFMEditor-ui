@@ -36,6 +36,9 @@
         <button style="margin-top: 20px" mat-button color="primary" type="submit" [disabled]="this.editForm.invalid">
             Update
         </button>
+        <button style="margin-top: 20px; margin-left: 20px" mat-button color="warn" type="button" (click)="removeNode()" [disabled]="false">
+            Remove
+        </button>
     </form>
 </div>
 <mat-divider class="divider"></mat-divider>

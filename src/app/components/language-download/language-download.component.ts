@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { RestService } from 'src/app/services/rest/rest.service';
+import { UpdateService } from 'src/app/services/update/update.service';
 
 @Component({
   selector: 'app-language-download',
@@ -9,15 +10,13 @@ import { RestService } from 'src/app/services/rest/rest.service';
 })
 export class LanguageDownloadComponent implements OnInit {
 
-  @Input() hash?: string;
   @Input() fmName?: string;
   
   languages?: string[];
   extensions?: string[];
   selectedLanguage?: string;
 
-  constructor(private http: RestService) {
-  
+  constructor(private http: RestService, public updateService: UpdateService) {
   }
 
   ngOnInit(): void {
@@ -29,7 +28,6 @@ export class LanguageDownloadComponent implements OnInit {
       this.http.getAllowedLanguages().subscribe({
         next: languages => {
           this.languages = languages;
-          console.log(languages)
         },
         error: error => {
           this.languages = [];
@@ -44,9 +42,9 @@ export class LanguageDownloadComponent implements OnInit {
   // si se han hecho cambios respecto al FM que se ha subido
   download() {
     const formData: FormData = new FormData();
-    formData.append('fm_hash', this.hash!);
+    formData.append('fm_hash', this.updateService.getCurrentHash());
     formData.append('fm_format', this.selectedLanguage!);
-    console.log(this.selectedLanguage);
+    //console.log(this.selectedLanguage);
     this.http.downloadFM(formData).subscribe({
       next: fm => {
         let file = new Blob([fm], { type: this.selectedLanguage });
@@ -54,7 +52,7 @@ export class LanguageDownloadComponent implements OnInit {
         downloadLink.href = window.URL.createObjectURL(file);
         if (this.fmName)
           downloadLink.setAttribute('download', this.fmName + "." + this.selectedLanguage);
-        console.log(this.fmName);
+        //console.log(this.fmName);
         document.body.appendChild(downloadLink);
         downloadLink.click();
         document.body.removeChild(downloadLink);

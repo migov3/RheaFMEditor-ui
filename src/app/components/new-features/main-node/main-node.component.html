@@ -23,7 +23,7 @@
     </p>
     <ul *ngIf="expanded">
         <li *ngFor="let relation of node.relations">
-            <app-relation-node [node]="relation"></app-relation-node>
+            <app-relation-node (toParentMainNode)="relationNodeHandler($event)" [node]="relation"></app-relation-node>
         </li>
     </ul>
 </div>

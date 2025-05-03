@@ -11,19 +11,20 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HeaderComponent } from './components/header/header.component';
 import { UploadFMComponent } from './components/upload-fm/upload-fm.component';
 import { FMEditorComponent } from './components/fmeditor/fmeditor.component';
-import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { LanguageDownloadComponent } from './components/language-download/language-download.component';
 import { LogComponent } from './components/log/log.component';
-import { DialogEditRelationNode, FeaturesComponent } from './components/features/features.component';
-import { ConstraintsComponent } from './components/constraints/constraints.component';
+import { ConstraintsComponent, DialogAddConstraint } from './components/constraints/constraints.component';
 import { InteropMatrixComponent } from './components/interop-matrix/interop-matrix.component';
-import { ConstraintTreeComponent } from './components/constraint-tree/constraint-tree.component';
 import { SemanticsMetricsComponent } from './components/semantics-metrics/semantics-metrics.component';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NewFeaturesComponent } from './components/new-features/new-features.component';
 import { DialogEditMainNode, MainNodeComponent } from './components/new-features/main-node/main-node.component';
-import { RelationNodeComponent } from './components/new-features/relation-node/relation-node.component';
+import { DialogEditRelationNode, RelationNodeComponent } from './components/new-features/relation-node/relation-node.component';
+import { AddFeatureModelDialog, RepositoryComponent } from './components/repository/repository.component';
+import { DialogLogin, LoginComponent, RegisterDialogComponent } from './components/login/login.component';
+import { JwtInterceptor } from './interceptor/jwt.interceptor';
+import { AuthenticationService } from './services/authentication/authentication.service';
 
 
 
@@ -34,19 +35,23 @@ import { RelationNodeComponent } from './components/new-features/relation-node/r
     HeaderComponent,
     UploadFMComponent,
     FMEditorComponent,
-    PageNotFoundComponent,
     LanguageDownloadComponent,
     LogComponent,
-    FeaturesComponent,
+    DialogLogin,
+    RegisterDialogComponent,
     ConstraintsComponent,
     InteropMatrixComponent,
-    ConstraintTreeComponent,
     SemanticsMetricsComponent,
     DialogEditMainNode,
     DialogEditRelationNode,
     NewFeaturesComponent,
     MainNodeComponent,
-    RelationNodeComponent
+    RelationNodeComponent,
+    RepositoryComponent,
+    DialogAddConstraint,
+    RepositoryComponent,
+    LoginComponent,
+    AddFeatureModelDialog
   ],
   imports: [
     BrowserModule,
@@ -57,6 +62,10 @@ import { RelationNodeComponent } from './components/new-features/relation-node/r
     NgSelectModule,
     HttpClientModule,
     ReactiveFormsModule
+  ],
+  providers: [
+    AuthenticationService,
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

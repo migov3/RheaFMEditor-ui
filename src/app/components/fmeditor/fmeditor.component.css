@@ -13,3 +13,35 @@
     flex: 1 1 auto;
     margin: 10px;
 }
+
+.upload {
+    min-width: 300px;
+    max-width: 750px;
+}
+
+.language {
+    min-width: 500px;
+    max-width: 300px;
+}
+
+.log {
+}
+
+.features {
+    min-width: 500px;
+}
+
+.constraints {
+    min-width: 500px;
+    max-width: 500px;
+}
+
+.interop {
+    min-width: 700px;
+}
+
+.semantic {
+    min-width: 450px;
+    max-width: 450px;
+}
+

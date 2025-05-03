@@ -1,0 +1,32 @@
+<h2 mat-dialog-title>Edit relation</h2>
+<div mat-dialog-content>
+    <form [formGroup]="editForm" (ngSubmit)="submitForm()">
+        <h3>Properties</h3>
+        <mat-form-field class="small-input">
+            <mat-label>Type</mat-label>
+            <mat-select formControlName="type" name="type">
+                <mat-option *ngFor="let type of types" [value]="type">
+                    {{type}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+            <div *ngIf="showCardMinMax()">
+                <mat-form-field class="small-input">
+                    <mat-label>Card. min.</mat-label>
+                    <input type="number" matInput placeholder="Value (default 1)" formControlName="card_min"/>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Card. max.</mat-label>
+                    <input type="number" matInput placeholder="Value (default 1)" formControlName="card_max"/>
+                </mat-form-field>
+            </div>
+        <mat-divider class=""></mat-divider>
+        <button style="margin-top: 20px" mat-button color="primary" type="submit" [disabled]="this.editForm.invalid">
+            Update
+        </button>
+    </form>
+</div>
+<mat-divider class="divider"></mat-divider>
+<div mat-dialog-actions align="end">
+    <button mat-button (click)="closeDialog()">Close</button>
+</div>

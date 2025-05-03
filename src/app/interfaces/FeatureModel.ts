@@ -1,5 +1,7 @@
 import { Constraint } from "./Constraint";
+import { LanguageConstruct } from "./LanguageConstruct";
 import { MainNode } from "./Nodes";
+import { SemanticMetric } from "./SemanticMetric";
 import { ToolsInfo } from "./ToolsInfo";
 
 export interface FeatureModel {
@@ -7,8 +9,8 @@ export interface FeatureModel {
     hash: string; // hash
     constraints: Constraint[]; // restricciones
     features: MainNode; // características
-    language_constructs: any[];
+    language_constructs: LanguageConstruct[];
     refactorings: any[];
-    semantics_metrics: any[];
+    semantics_metrics: SemanticMetric[];
     tools_info: ToolsInfo[];
 }

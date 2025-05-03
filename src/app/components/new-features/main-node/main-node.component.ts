@@ -1,12 +1,17 @@
-import { Component, Inject, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
+import { cloneDeep } from 'lodash-es';
 import { EXTENSION, IMAGE_URL, MANDATORY_RELATION, OPTIONAL_RELATION } from 'src/app/constants';
-import { FlatNode, MainNode } from 'src/app/interfaces/Nodes';
-import { MainNodeDialogData } from '../../features/features.component';
+import { MainNode, RelationNode } from 'src/app/interfaces/Nodes';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Attribute } from 'src/app/interfaces/Attribute';
-import { FeatureModel } from 'src/app/interfaces/FeatureModel';
-import { filter } from 'rxjs';
+import { filter } from 'rxjs/operators';
+import { UpdateService } from 'src/app/services/update/update.service';
+
+export interface MainNodeDialogData {
+  node: MainNode;
+  hash: string;
+}
 
 @Component({
   selector: 'app-main-node',
@@ -14,8 +19,13 @@ import { filter } from 'rxjs';
   styleUrls: ['../new-features.component.css']
 })
 export class MainNodeComponent implements OnInit {
-  @Input() fm!: FeatureModel;
+
   @Input() node!: MainNode;
+  
+  constructor(public dialog: MatDialog, private updateService: UpdateService) {}
+  
+  
+  @Output() toParentRelationNode = new EventEmitter();
   @Input() hash?: string;
   @Input() type?: string;
 
@@ -37,7 +47,20 @@ export class MainNodeComponent implements OnInit {
   alt?: string;
   expanded: boolean = false;
 
-  constructor(public dialog: MatDialog) {}
+  expandNode() {
+    this.expanded = true;
+  }
+
+  relationNodeHandler($event: RelationNode) {
+    this.node.relations.forEach((rel, i) => {
+      console.log("Borra la relacion? "+ (!rel.children || rel.children.length < 1) );
+      console.log(rel)
+      console.log($event)
+      if (!rel.children || rel.children.length < 1) {
+        this.node.relations.splice(i, 1);
+      } // borra la relacion si ya no eixsten nodos a los que relacionar
+    });
+  }
   
   openMainNodeDialog(node: MainNode) {
     const dialog = this.dialog.open(DialogEditMainNode, {
@@ -47,13 +70,16 @@ export class MainNodeComponent implements OnInit {
 
     dialog.afterClosed().pipe(
         filter(node => node)
-      ).subscribe(node => {
-      console.log(node);
-      this.node = node;
-    })
-}
-
-  
+      ).subscribe(nodes => {
+        // Lanzar el nodo al observer para que se detecten los cambios al nodo
+        if (nodes[1] === null) {
+          this.toParentRelationNode.emit(nodes[0]);
+        }
+        this.updateService.nodeUpdate.next([nodes[0], nodes[1]]);
+        this.updateService.updating.next(true);
+        //console.log(nodes);
+    });
+  }
 }
 
 @Component({
@@ -65,7 +91,8 @@ export class DialogEditMainNode {
 
   editForm: FormGroup;
 
-  node!: FlatNode;
+  oldNode!: MainNode;
+  node!: MainNode;
   name?: string;
   abstract?: boolean;
   attributes: Attribute[] = ([]);
@@ -73,6 +100,7 @@ export class DialogEditMainNode {
   constructor(private formBuilder: FormBuilder,
       public dialogRef: MatDialogRef<DialogEditMainNode>,
       @Inject(MAT_DIALOG_DATA) public data: MainNodeDialogData) {
+      this.oldNode = cloneDeep(data.node);
       this.node = data.node;
       this.abstract = this.node.abstract;
       this.name = this.node.name;
@@ -81,7 +109,7 @@ export class DialogEditMainNode {
       });
 
       this.editForm = this.formBuilder.group({
-          name: [this.name, [Validators.required, Validators.maxLength(30)]],
+          name: [this.name, [Validators.required, Validators.maxLength(50)]],
           abstract: [this.abstract],
           attributes: this.formBuilder.array(this.attributes.map(attribute =>
               this.formBuilder.group({
@@ -112,18 +140,24 @@ export class DialogEditMainNode {
       this.attributesArray.removeAt(index);
   }
 
+  // Elimina caracteres especiales
+  // Espacios por guion bajo
+  clearSpecialChars(s: string) { 
+      return s.replace(/[^a-zA-Z0-9 ]/g, "").replace(/\s+/g, "_");
+  }
+
   submitForm(): void {
-      this.node.name = this.editForm.value.name;
+      this.node.name = this.clearSpecialChars(this.editForm.value.name);// Limpiamos caracteres especiales para que no falle el upload
       this.node.abstract = this.editForm.value.abstract;
       this.node.attributes = this.attributesArray.value;
-      this.closeDialog();
-      //formData.append('file', )
-      //this.http.updateFM();
-      this.dialogRef.close(this.node);
+      this.dialogRef.close([this.oldNode, this.node]);
+  }
+
+  removeNode(): void {
+    this.dialogRef.close([this.oldNode, null]);
   }
 
   closeDialog(): void {
       this.dialogRef.close();
   }
-
 }

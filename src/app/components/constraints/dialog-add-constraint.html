@@ -1,0 +1,38 @@
+<h2 mat-dialog-title>Add constraint</h2>
+<div mat-dialog-content>
+    <h3>Expression</h3>
+    <form [formGroup]="addConstraintForm" (ngSubmit)="submitForm()">
+        <mat-form-field style="font-size:12px; width: 650px">
+            <mat-label>Constraint expression</mat-label>
+            <textarea #expression matInput formControlName="expression" placeholder="Ex. (CheesyCrust AND Sicilian) IMPLIES Big"></textarea>
+        </mat-form-field>
+        <mat-divider class="divider"></mat-divider>
+        <mat-grid-list cols="{{funcs.length}}" rowHeight="75px">
+            <div *ngFor="let f of funcs">
+                <mat-grid-tile
+                [colspan]="1"
+                [rowspan]="1">
+                    <button type="button" (click)="addFunc(f)" mat-button>{{ f }}</button>
+                </mat-grid-tile>
+            </div>
+        </mat-grid-list>
+        <mat-divider class="divider"></mat-divider>
+        <mat-grid-list cols="7" rowHeight="75px">
+            <div *ngFor="let n of nodeList">
+                <mat-grid-tile
+                [colspan]="1"
+                [rowspan]="1">
+                    <button type="button" (click)="addNode(n)" mat-button>{{ n }}</button>
+                </mat-grid-tile>
+            </div>
+        </mat-grid-list>
+        <mat-divider class="divider"></mat-divider>
+        <button style="margin-top: 20px" mat-button color="primary" type="submit" [disabled]="this.addConstraintForm.invalid">
+            Save
+        </button>
+    </form>
+</div>
+<mat-divider class="divider"></mat-divider>
+<div mat-dialog-actions align="end">
+    <button mat-button (click)="closeDialog()">Close</button>
+</div>
