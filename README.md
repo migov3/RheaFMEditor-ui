@@ -2,29 +2,6 @@
 
 This web application provides a user-friendly interface for managing feature models. With this tool, you can upload your own feature model or select one of the pre-existing examples available. You can then perform various operations on the feature model, such as viewing the tree representation, editing the feature model, modifying node attributes and constraints, viewing the constraint tree, and analyzing semantic metrics. Additionally, the tool offers an interoperability matrix that enables you to restructure the tree and download it in different languages and formats.
 
-
-## Table of Contents
-
-- [Features](#features)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
-- [Acknowledgements](#acknowledgements)
-
-
-## Features (WIP)
-
-- Upload your own feature model or select from pre-existing examples
-- View the tree representation of the feature model
-- Edit the feature model structure
-- Modify node attributes and constraints
-- View the constraint tree
-- Analyze semantic metrics
-- Use the interoperability matrix to restructure the tree
-- Download the feature model in various languages and formats
-
-
 ## Installation
 
 To run the app locally on your machine, please follow these steps:
@@ -62,6 +39,8 @@ npm run start
 
 6. Open your browser and visit http://localhost:4200 to access.
 
+![image](https://github.com/user-attachments/assets/eebde069-0dc6-4b7c-bfaa-2a7ea7a8dad1)
+
 
 ## Usage
 
@@ -72,7 +51,7 @@ Upon accessing in your browser, you will be presented with the following options
 
 Once a feature model is loaded, you can perform the following actions:
 
-## (WIP)
+
 - **View Tree**: Visualize the feature model as a tree structure.
 - **Edit Feature Model**: Modify the structure of the feature model by adding, deleting, or reordering nodes.
 - **Edit Node Attributes**: Customize the attributes of individual nodes in the feature model.
@@ -81,3 +60,5 @@ Once a feature model is loaded, you can perform the following actions:
 - **View Semantic Metrics**: Analyze semantic metrics to evaluate the quality and coherence of the feature model.
 - **Interoperability Matrix**: Use the matrix to restructure the feature model for different languages and formats.
 - **Download Feature Model**: Download the modified feature model in a language and format of your choice.
+
+**Some of these features were discarded or left partially implemented**
